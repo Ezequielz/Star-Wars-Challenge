@@ -8,7 +8,7 @@ import { Spinner } from "../components/Spinner"
 export const HomePage = () => {
     
     const state = useSelector(state => state )
-
+   
     const [allPlanets, setAllPlanets] = useState([])
     const [isLoading, setIsLoading] = useState(true)    
     const [currentPage, setCurrentPAge] = useState(0)
@@ -53,7 +53,7 @@ export const HomePage = () => {
     useEffect(() => {
 
         if(allPlanets.planets){
-            console.log('allPlanets')
+            
             setIsLoading(false)
         }
 
@@ -75,6 +75,55 @@ export const HomePage = () => {
     setCurrentPAge(0)
     setSearch(nameCapitalize)
   }
+
+  const handleAddFav = (e) =>{
+      e.preventDefault()
+      
+      let saveFav 
+
+      state.data.planets.map(favMapedPlanets => {
+          if(favMapedPlanets.id === e.target.value)
+          
+          saveFav = favMapedPlanets
+                  
+      })
+
+      if(localStorage.getItem('planetFav') == null ){
+
+            localStorage.setItem( 'planetFav',  JSON.stringify( [saveFav]  ))
+      }else{
+
+          let localSave = JSON.parse(localStorage.getItem('planetFav'))
+            localSave.push(saveFav)
+
+            localStorage.setItem( 'planetFav',  JSON.stringify( localSave  ))
+
+      }
+  }
+
+  const handleRemoveFav = (e) =>{
+    e.preventDefault()
+
+    let localSave = JSON.parse(localStorage.getItem('planetFav'))
+    let newSave = localSave
+        
+        localSave.map( planetLocalStorage => {
+
+        if(planetLocalStorage.id === e.target.value){
+
+            newSave = localSave.filter( planetFiltered =>{
+                return planetFiltered.id !== e.target.value
+            } )
+
+        }
+
+
+        } )
+        localStorage.setItem( 'planetFav',  JSON.stringify( newSave  ))
+        
+  }
+
+  const FavPlanets = JSON.parse(localStorage.getItem('planetFav'))
 
     return (
         <div className='mt-5'>
@@ -107,14 +156,15 @@ export const HomePage = () => {
                     <Spinner/>
                     :
                     <>
-                    <table className='table'>
+                    <table className='table animate__animated animate__fadeIn'>
 
-                        <thead>
-                            <tr>
-                                <th style={{ width: 100 }} >Name</th>
-                                <th style={{ width: 100 }} >Diameter</th>
+                        <thead >
+                            <tr >
+                                <th style={{ width: 80 }} >Name</th>
+                                <th style={{ width: 60 }} >Diameter</th>
                                 <th style={{ width: 100 }} >Climate</th>
-                                <th style={{ width: 100 }} >Terrain</th>
+                                <th style={{ width: 130 }} >Terrain</th>
+                                <th style={{ width: 50 }} > Favorite</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -128,7 +178,39 @@ export const HomePage = () => {
                                         <td>{ planet.diameter }</td>
                                         <td> { planet.climate } </td>
                                         <td> { planet.terrain } </td>
-                                    
+                                        <td> 
+
+                                        {/* { 
+                                            (FavPlanets)&&
+                                                                            
+                                            FavPlanets.map( planetFav =>{
+                                                ( planetFav.id === planet.id )?
+                                                
+                                                 console.log(planet.id)
+                                                 : 
+                                                 console.log(planetFav.id)
+                                            
+                                            })
+                                            
+                                        } */}
+                                
+                                     
+                                            <button
+                                                value={ planet.id }
+                                                className="btn btn-primary"
+                                                onClick={ handleAddFav }
+                                            >+
+                                            </button>
+
+                                            <button
+                                                value={ planet.id }
+                                                className="btn btn-danger"
+                                                onClick={ handleRemoveFav }
+                                            >-
+                                            </button>
+
+                                        </td>
+                                        
                                     </tr>
                                     
                                     )

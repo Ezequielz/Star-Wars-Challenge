@@ -27,9 +27,30 @@ export const fetchStarWarsApi = async() => {
             })
          })
         
-    //  console.log(Planets)
 
-    return Planets 
+    return transformApiPlanetsToPlanets(Planets) 
     
+}
+
+const transformApiPlanetsToPlanets = ( Planets ) =>{
+
+    const planetsAll = Planets.map( planet =>{
+
+        const planetUrl = planet.url.split('/')
+        const id = planetUrl[5]
+
+        
+
+        return{
+            id,
+            name: planet.name,
+            climate:planet.climate,
+            diameter:planet.diameter,
+            terrain:planet.terrain,
+            // favorite: null
+        }
+    })
+
+    return planetsAll
 }
 
