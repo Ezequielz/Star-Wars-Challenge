@@ -14,6 +14,8 @@ export const HomePage = () => {
     const [currentPage, setCurrentPAge] = useState(0)
     const [search, setSearch] = useState('')
     const [searching, setSearching] = useState('')
+    const FavPlanets = JSON.parse(localStorage.getItem('planetFav'))
+    const [favouritesPlanets, setFavouritesPlanets] = useState(FavPlanets.length)
 
     const filteredPlanets = () =>{
 
@@ -94,6 +96,8 @@ export const HomePage = () => {
       }else{
 
           let localSave = JSON.parse(localStorage.getItem('planetFav'))
+          setFavouritesPlanets(favouritesPlanets + 1)
+
             localSave.push(saveFav)
 
             localStorage.setItem( 'planetFav',  JSON.stringify( localSave  ))
@@ -119,16 +123,25 @@ export const HomePage = () => {
 
 
         } )
+        setFavouritesPlanets(favouritesPlanets - 1)
         localStorage.setItem( 'planetFav',  JSON.stringify( newSave  ))
         
   }
 
-  const FavPlanets = JSON.parse(localStorage.getItem('planetFav'))
+  
+  const PlanetsIdArr = []
+  if(FavPlanets){
+
+      FavPlanets.map( planetLS =>
+          PlanetsIdArr.push(planetLS.id)
+          )
+  }
 
     return (
         <div className='mt-5'>
 
             <h1> List of Star Wars planets </h1>
+            <h2> {favouritesPlanets} </h2>
 
                 <form onSubmit={ handleSubmit }>
 
@@ -160,54 +173,45 @@ export const HomePage = () => {
 
                         <thead >
                             <tr >
-                                <th style={{ width: 80 }} >Name</th>
-                                <th style={{ width: 60 }} >Diameter</th>
-                                <th style={{ width: 100 }} >Climate</th>
-                                <th style={{ width: 130 }} >Terrain</th>
-                                <th style={{ width: 50 }} > Favorite</th>
+                                <th style={{ width: 100 }} >Name</th>
+                                <th style={{ width: 100 }} >Diameter</th>
+                                <th style={{ width: 120 }} >Climate</th>
+                                <th style={{ width: 150 }} >Terrain</th>
+                                <th style={{ width: 30 }} > Favorite</th>
                             </tr>
                         </thead>
                         <tbody>
                         
                                 {(allPlanets.planets)&&
+
                                 
                                 filteredPlanets().map(planet=> 
                                     
                                     <tr key={planet.create+planet.name}>
-                                        <td>{planet.name}</td>
+                                        <td >{planet.name}</td>
                                         <td>{ planet.diameter }</td>
                                         <td> { planet.climate } </td>
                                         <td> { planet.terrain } </td>
                                         <td> 
 
-                                        {/* { 
-                                            (FavPlanets)&&
-                                                                            
-                                            FavPlanets.map( planetFav =>{
-                                                ( planetFav.id === planet.id )?
-                                                
-                                                 console.log(planet.id)
-                                                 : 
-                                                 console.log(planetFav.id)
-                                            
-                                            })
-                                            
-                                        } */}
-                                
-                                     
-                                            <button
-                                                value={ planet.id }
-                                                className="btn btn-primary"
-                                                onClick={ handleAddFav }
-                                            >+
-                                            </button>
-
+                                        {   
+                                        (PlanetsIdArr)&&
+                                            ( PlanetsIdArr.includes(planet.id))
+                                            ?
                                             <button
                                                 value={ planet.id }
                                                 className="btn btn-danger"
                                                 onClick={ handleRemoveFav }
                                             >-
                                             </button>
+                                            :
+                                            <button
+                                                value={ planet.id }
+                                                className="btn btn-primary"
+                                                onClick={ handleAddFav }
+                                            >+
+                                            </button>
+                                        }
 
                                         </td>
                                         

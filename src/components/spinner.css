@@ -19,7 +19,7 @@
     display: block;
     width: 25%;
     height: 25%;
-    background-color: rgb(248, 9, 9);
+    background-color: rgb(9, 65, 248);
     border-radius: 100%;
     animation: sk-chase-dot-before 2.0s infinite ease-in-out both; 
   }

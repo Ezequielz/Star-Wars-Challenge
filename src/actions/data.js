@@ -1,4 +1,3 @@
-import { fetchStarWarsApi } from "../api/starWarsApi";
 import { types } from "../types/types";
 
 
