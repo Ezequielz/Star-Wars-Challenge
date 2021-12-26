@@ -1,0 +1,52 @@
+
+
+
+.home__main {
+    background-color: rgba(253, 251, 251, 0.089);
+   border-radius: 12px;
+   padding: 15px;
+   width: 79%;
+   
+  
+}
+
+.home__title {
+    
+    justify-content: center;
+    font-weight: bold;
+    text-align: center;
+}
+
+.home__search {
+    color: $dark;
+    border: 0px;
+    border-radius: 6px;
+    margin-left: 50px;
+    
+    font-size: 18px;
+    padding: 3px;
+   
+
+    transition: border .3s ease;
+
+    &:focus {
+        background-color: $light-grey;
+        border: 3px solid $dark;
+        outline: none;
+    }
+    
+}
+
+.home__form{
+    display: flex;
+    justify-content: center;
+}
+.home__btn{
+    margin-left: 5px;
+    height: 19px;
+}
+.home__planetsFav{
+    margin-bottom: -20px;
+    display: flex;
+    justify-content: flex-end;
+}

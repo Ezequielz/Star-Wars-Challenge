@@ -4,24 +4,24 @@ export const PaginationButtons = ({nextPage,prevPage}) => {
 
 
     return (
-        <>
+        <div className='btn_next btn_pag'>
 
             <button 
-            className="btn btn-primary"
+            className="butn btn-pri"
             onClick={ prevPage }
             >
                 Prev
             </button>
             
             <button 
-                className="btn btn-primary"
+                className="butn btn-pri"
                 onClick={ nextPage }
             > 
                     Next
             </button> 
         
         
-        </>
+        </div>
 
 
     )

@@ -21,13 +21,13 @@ export const FavoritePage = () => {
     }
 
     return (
-        <div className='mt-5'>
-            <h1> {favouritesPlanets}  Favorite Star Wars Planets</h1>
+        <div className='mt-5 home__main container'>
+            <h1 className='home__title'> {favouritesPlanets}  Favorite Star Wars Planets</h1>
 
             <nav>                        
                 <Link 
                     to="/ "
-                    className="btn btn-primary"
+                    className="butn btn-pri btn_back"
                 >Back
                 </Link>                       
             </nav> 
@@ -76,7 +76,7 @@ export const FavoritePage = () => {
 
             </table> 
 
-            {(localSave.length >= 1)&&
+            {(localSave.length > 10)&&
             
             
                 <PaginationButtons 

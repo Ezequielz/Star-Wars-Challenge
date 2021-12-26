@@ -86,17 +86,25 @@ export const HomePage = () => {
 
 
     return (
-        <div className='mt-5'>
+        <div className='mt-5 home__main container'>
 
-            <h1> List of Star Wars planets </h1>
+            <nav className=" home__planetsFav" >                        
+                <Link 
+                    to="/favoritesplanets "
+                    className="butn btn-pri"
+                >Planets Favorites : {favouritesPlanets}
+                </Link>                       
+            </nav> 
+
+            <h1 className="home__title row"> List of Star Wars planets </h1>
             
-                <form onSubmit={ handleSubmit }>
+                <form onSubmit={ handleSubmit } className="col-12 home__form">
 
                     <input
                         type="text"
                         placeholder="Search planet"
                         name="search"
-                        className="mb-2 form-control"
+                        className="mb-1 home__search col-6"
                         value={ searching }
                         onChange={ handleSearch }
                         autoComplete="off"
@@ -104,17 +112,11 @@ export const HomePage = () => {
                     />
                     <button 
                         type="submit"
-                        className="btn btn-primary"
+                        className="butn btn-pri home__btn"
                        >Search
                     </button>
 
-                    <nav className="d-flex justify-content-end" >                        
-                        <Link 
-                            to="/favoritesplanets "
-                            className="btn btn-primary"
-                        >Planets Favorites : {favouritesPlanets}
-                        </Link>                       
-                    </nav> 
+
 
                 </form>
 

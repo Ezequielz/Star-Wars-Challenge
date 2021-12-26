@@ -81,14 +81,14 @@ export const CardPlanet = ({
                 ?
                 <button
                     value={ planet.id }
-                    className="btn btn-danger "
+                    className="butn btn-sec "
                     onClick={ handleRemoveFav }
                 >Remove
                 </button>
                 :
                 <button
                     value={ planet.id }
-                    className="btn btn-primary " 
+                    className="butn btn-pri " 
                     onClick={ handleAddFav }
                 >Add
                 </button>
