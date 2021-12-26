@@ -19,6 +19,8 @@ Maquetado:
 -usar flexbox o grid
 -styled components o sass
 
+-Tiempo de entrega maximo: 7 dias
+
 Será un plus si agregas:
 - unit testing
 - typescript
@@ -29,3 +31,11 @@ Será un plus si agregas:
 - 1: [https://swapi.dev/documentation](https://swapi.dev/documentation)
 - 2: [https://swapi.dev/documentation#search](https://swapi.dev/documentation#search)
 - 3: [https://graphql.org/swapi-graphql/](https://graphql.org/swapi-graphql/)
+
+
+
+# Puedes ver el challenge terminado en ---->[Star Wars Challenge](https://starwars-planets-zapata.netlify.app/)
+
+
+
+
