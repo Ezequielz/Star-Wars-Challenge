@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
-import { startSaveData } from "../actions/data"
+
 import { fetchStarWarsApi } from "../api/starWarsApi"
+import { startSaveData } from "../actions/data"
 import { Spinner } from "../components/Spinner"
 import { Link } from 'react-router-dom'
+import { Cards } from "../components/Cards"
+import { PaginationButtons } from "../components/PaginationButtons"
 
 export const HomePage = () => {
     
@@ -36,6 +39,8 @@ export const HomePage = () => {
         if (currentPage > 0)
         setCurrentPAge( currentPage - 10 )
     }
+
+
 
     useEffect(() => {
     
@@ -79,64 +84,6 @@ export const HomePage = () => {
     setSearch(nameCapitalize)
   }
 
-  const handleAddFav = (e) =>{
-      e.preventDefault()
-      
-      let saveFav 
-
-      state.data.planets.map(favMapedPlanets => {
-          if(favMapedPlanets.id === e.target.value)
-          
-          saveFav = favMapedPlanets
-                  
-      })
-
-      if(localStorage.getItem('planetFav') == null ){
-
-            localStorage.setItem( 'planetFav',  JSON.stringify( [saveFav]  ))
-      }else{
-
-          let localSave = JSON.parse(localStorage.getItem('planetFav'))
-          setFavouritesPlanets(favouritesPlanets + 1)
-
-            localSave.push(saveFav)
-
-            localStorage.setItem( 'planetFav',  JSON.stringify( localSave  ))
-
-      }
-  }
-
-  const handleRemoveFav = (e) =>{
-    e.preventDefault()
-
-    let localSave = JSON.parse(localStorage.getItem('planetFav'))
-    let newSave = localSave
-        
-        localSave.map( planetLocalStorage => {
-
-        if(planetLocalStorage.id === e.target.value){
-
-            newSave = localSave.filter( planetFiltered =>{
-                return planetFiltered.id !== e.target.value
-            } )
-
-        }
-
-
-        } )
-        setFavouritesPlanets(favouritesPlanets - 1)
-        localStorage.setItem( 'planetFav',  JSON.stringify( newSave  ))
-        
-  }
-
-  
-  const PlanetsIdArr = []
-  if(FavPlanets){
-
-      FavPlanets.map( planetLS =>
-          PlanetsIdArr.push(planetLS.id)
-          )
-  }
 
     return (
         <div className='mt-5'>
@@ -160,6 +107,7 @@ export const HomePage = () => {
                         className="btn btn-primary"
                        >Search
                     </button>
+
                     <nav className="d-flex justify-content-end" >                        
                         <Link 
                             to="/favoritesplanets "
@@ -172,82 +120,31 @@ export const HomePage = () => {
 
             <hr/>
 
-            { (isLoading)? 
+            { (isLoading)
+                    ? 
                     <Spinner/>
+
                     :
-                    <>
-                    <table className='table animate__animated animate__fadeIn'>
+                <>
+                    <Cards 
+                        allPlanets={allPlanets} 
+                        filteredPlanets={filteredPlanets}
+                        FavPlanets={FavPlanets}
+                        state={state}
+                        favouritesPlanets={favouritesPlanets}
+                        setFavouritesPlanets={setFavouritesPlanets}
+                    />
 
-                        <thead >
-                            <tr >
-                                <th style={{ width: 100 }} >Name</th>
-                                <th style={{ width: 100 }} >Diameter</th>
-                                <th style={{ width: 120 }} >Climate</th>
-                                <th style={{ width: 150 }} >Terrain</th>
-                                <th style={{ width: 100}} > Favorite</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        
-                                {(allPlanets.planets)&&
+                    <PaginationButtons 
+                    
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                    />
 
-                                
-                                filteredPlanets().map(planet=> 
-                                    
-                                    <tr key={planet.create+planet.name}>
-                                        <td >{planet.name}</td>
-                                        <td>{ planet.diameter }</td>
-                                        <td> { planet.climate } </td>
-                                        <td> { planet.terrain } </td>
-                                        <td> 
-
-                                        {   
-                                        (PlanetsIdArr)&&
-                                            ( PlanetsIdArr.includes(planet.id))
-                                            ?
-                                            <button
-                                                value={ planet.id }
-                                                className="btn btn-danger "
-                                                onClick={ handleRemoveFav }
-                                            >Remove
-                                            </button>
-                                            :
-                                            <button
-                                                value={ planet.id }
-                                                className="btn btn-primary " 
-                                                onClick={ handleAddFav }
-                                            >Add
-                                            </button>
-                                        }
-
-                                        </td>
-                                        
-                                    </tr>
-                                    
-                                    )
-                                }
-        
-                        </tbody>
-
-                </table> 
-                <button 
-                    className="btn btn-primary"
-                    onClick={ prevPage }
-                >
-                    Prev
-                </button>
-                
-                <button 
-                    className="btn btn-primary"
-                    onClick={ nextPage }
-                > 
-                        Next
-                </button> 
                 </>
             }
 
 
-            
         </div>
     )
 }

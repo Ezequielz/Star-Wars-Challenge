@@ -1,31 +1,24 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CardHead } from '../components/CardHead'
+import { CardPlanet } from '../components/CardPlanet'
+import { PaginationButtons } from '../components/PaginationButtons'
 
 export const FavoritePage = () => {
     const localSave = JSON.parse(localStorage.getItem('planetFav'))
     const [favouritesPlanets, setFavouritesPlanets] = useState(localSave.length)
+    const [currentPage, setCurrentPAge] = useState(0)
 
-    const handleRemoveFav = (e) =>{
-        e.preventDefault()
-    
-        let newSave = localSave
-            
-            localSave.map( planetLocalStorage => {
-    
-            if(planetLocalStorage.id === e.target.value){
-    
-                newSave = localSave.filter( planetFiltered =>{
-                    return planetFiltered.id !== e.target.value
-                })
-    
-            }
-            })
+    const localSavePagination = localSave.slice(currentPage,currentPage + 10)
 
-            setFavouritesPlanets(favouritesPlanets - 1)
-            localStorage.setItem( 'planetFav',  JSON.stringify( newSave  ))
-            
-      }
-
+    const nextPage = () => {
+        if( localSave.length > currentPage +10 )
+        setCurrentPAge( currentPage + 10 )
+    }
+    const prevPage = () => {
+        if (currentPage > 0)
+        setCurrentPAge( currentPage - 10 )
+    }
 
     return (
         <div className='mt-5'>
@@ -41,48 +34,39 @@ export const FavoritePage = () => {
             <table className='table animate__animated animate__fadeIn'>
 
 
-                <thead >
+               
                 {
                     ( localSave.length >= 1 )?
 
-
-                    <tr >
-                        <th style={{ width: 100 }} >Name</th>
-                        <th style={{ width: 100 }} >Diameter</th>
-                        <th style={{ width: 120 }} >Climate</th>
-                        <th style={{ width: 150 }} >Terrain</th>
-                        <th style={{ width: 100 }} > Favorite</th>
-                    </tr>
+                    <CardHead />
 
                     :
+                    
 
-                    <p>you don't have favorite planets</p>
+                        <thead>
+                            <tr>
+                                <th>
+
+                                    you don't have favorite planets
+                                </th>
+
+                            </tr>
+                        </thead>
+                    
                 }
-                </thead>
+               
                 <tbody>
 
                 {
                  
-                            localSave.map(planet =>
-
-
-                                <tr >
-                                    <td >{planet.name}</td>
-                                    <td>{ planet.diameter }</td>
-                                    <td> { planet.climate } </td>
-                                    <td> { planet.terrain } </td>
-                                    <td> 
-                                          
-                                        <button
-                                            value={ planet.id }
-                                            className="btn btn-danger "
-                                            onClick={ handleRemoveFav }
-                                        >Remove
-                                        </button>
-                                            
-                                    </td>
-                                    
-                                </tr>
+                 localSavePagination.map(planet =>
+                                <CardPlanet 
+                                    key={planet.id} 
+                                    FavPlanets={localSave} 
+                                    planet={planet} 
+                                    setFavouritesPlanets={setFavouritesPlanets}
+                                    favouritesPlanets={favouritesPlanets}
+                                />
 
                             )
 
@@ -91,6 +75,16 @@ export const FavoritePage = () => {
                 </tbody>
 
             </table> 
+
+            {(localSave.length >= 1)&&
+            
+            
+                <PaginationButtons 
+                    
+                    nextPage={nextPage}
+                    prevPage={prevPage}
+                />
+            }
 
 
 

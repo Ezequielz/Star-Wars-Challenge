@@ -26,6 +26,6 @@ Será un plus si agregas:
 - async/await 
 - children props
 
-- 1: [Link](https://swapi.dev/documentation)
-- 2: [Link](https://swapi.dev/documentation#search)
-- 3: [Link](https://graphql.org/swapi-graphql/)
+- 1: [https://swapi.dev/documentation](https://swapi.dev/documentation)
+- 2: [https://swapi.dev/documentation#search](https://swapi.dev/documentation#search)
+- 3: [https://graphql.org/swapi-graphql/](https://graphql.org/swapi-graphql/)
