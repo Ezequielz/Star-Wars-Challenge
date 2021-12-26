@@ -5,7 +5,10 @@ import { CardPlanet } from '../components/CardPlanet'
 import { PaginationButtons } from '../components/PaginationButtons'
 
 export const FavoritePage = () => {
-    const localSave = JSON.parse(localStorage.getItem('planetFav'))
+    let localSave = JSON.parse(localStorage.getItem('planetFav'))
+    if(!localSave){
+        localSave = []
+    }
     const [favouritesPlanets, setFavouritesPlanets] = useState(localSave.length)
     const [currentPage, setCurrentPAge] = useState(0)
 

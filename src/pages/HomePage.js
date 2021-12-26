@@ -10,7 +10,6 @@ import { Cards } from "../components/Cards"
 import { PaginationButtons } from "../components/PaginationButtons"
 
 export const HomePage = () => {
-    
     const state = useSelector(state => state )
    
     const [allPlanets, setAllPlanets] = useState([])
@@ -18,7 +17,11 @@ export const HomePage = () => {
     const [currentPage, setCurrentPAge] = useState(0)
     const [search, setSearch] = useState('')
     const [searching, setSearching] = useState('')
-    const FavPlanets = JSON.parse(localStorage.getItem('planetFav'))
+    let FavPlanets = JSON.parse(localStorage.getItem('planetFav'))
+    if(!FavPlanets){
+        FavPlanets = []
+    }
+
     const [favouritesPlanets, setFavouritesPlanets] = useState(FavPlanets.length)
 
     const filteredPlanets = () =>{
