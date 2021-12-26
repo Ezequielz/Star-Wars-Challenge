@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { startSaveData } from "../actions/data"
 import { fetchStarWarsApi } from "../api/starWarsApi"
 import { Spinner } from "../components/Spinner"
+import { Link } from 'react-router-dom'
 
 export const HomePage = () => {
     
@@ -141,13 +142,12 @@ export const HomePage = () => {
         <div className='mt-5'>
 
             <h1> List of Star Wars planets </h1>
-            <h2> {favouritesPlanets} </h2>
-
+            
                 <form onSubmit={ handleSubmit }>
 
                     <input
                         type="text"
-                        placeholder="Buscar planeta"
+                        placeholder="Search planet"
                         name="search"
                         className="mb-2 form-control"
                         value={ searching }
@@ -158,8 +158,15 @@ export const HomePage = () => {
                     <button 
                         type="submit"
                         className="btn btn-primary"
-                       >Buscar
+                       >Search
                     </button>
+                    <nav className="d-flex justify-content-end" >                        
+                        <Link 
+                            to="/favoritesplanets "
+                            className="btn btn-primary"
+                        >Planets Favorites : {favouritesPlanets}
+                        </Link>                       
+                    </nav> 
 
                 </form>
 
@@ -177,7 +184,7 @@ export const HomePage = () => {
                                 <th style={{ width: 100 }} >Diameter</th>
                                 <th style={{ width: 120 }} >Climate</th>
                                 <th style={{ width: 150 }} >Terrain</th>
-                                <th style={{ width: 30 }} > Favorite</th>
+                                <th style={{ width: 100}} > Favorite</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -200,16 +207,16 @@ export const HomePage = () => {
                                             ?
                                             <button
                                                 value={ planet.id }
-                                                className="btn btn-danger"
+                                                className="btn btn-danger "
                                                 onClick={ handleRemoveFav }
-                                            >-
+                                            >Remove
                                             </button>
                                             :
                                             <button
                                                 value={ planet.id }
-                                                className="btn btn-primary"
+                                                className="btn btn-primary " 
                                                 onClick={ handleAddFav }
-                                            >+
+                                            >Add
                                             </button>
                                         }
 
@@ -227,14 +234,14 @@ export const HomePage = () => {
                     className="btn btn-primary"
                     onClick={ prevPage }
                 >
-                    Anterior
+                    Prev
                 </button>
                 
                 <button 
                     className="btn btn-primary"
                     onClick={ nextPage }
                 > 
-                        Siguiente
+                        Next
                 </button> 
                 </>
             }
